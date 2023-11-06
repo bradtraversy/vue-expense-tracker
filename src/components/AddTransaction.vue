@@ -31,6 +31,8 @@ const amount = ref('');
 // Get toast interface
 const toast = useToast();
 
+const emit = defineEmits(['transactionSubmitted']);
+
 const onSubmit = () => {
   if (!text.value || !amount.value) {
     // Display a toast error message if either field is empty
@@ -38,8 +40,12 @@ const onSubmit = () => {
     return;
   }
 
-  // Proceed with form submission logic here...
-  console.log('Form submitted:', text.value, amount.value);
+  const transactionData = {
+    text: text.value,
+    amount: parseFloat(amount.value),
+  };
+
+  emit('transactionSubmitted', transactionData);
 
   // Clear form fields
   text.value = '';
